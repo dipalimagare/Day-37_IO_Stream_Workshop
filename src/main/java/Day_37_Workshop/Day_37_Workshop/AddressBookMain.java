@@ -16,7 +16,7 @@ public class AddressBookMain {
 		contactDetailsList = new LinkedList<>();
 	}
 
-	private void addContact(int addressBookNum) {
+	private static void addContact(int addressBookNum) {
 		System.out.print("Enter the number of entry in Address Book-" + addressBookNum + "::");
 		int numOfEntries = sc.nextInt();
 		sc.nextLine();
@@ -120,10 +120,21 @@ public class AddressBookMain {
         }
 
     }
+	private static void addingMultipleContacts(Map<String, AddressBookMain> addressBookMap) {
+		System.out.println("Adding multiple contacts to addressbook");
+		Scanner s = new Scanner(System.in);
+		System.out.println("Enter how many contacts do u want to add?");
+		int numOfContacts = s.nextInt();
+		for (int i = 1; i <= numOfContacts; i++) {
+			AddressBookMain.addContact(numOfContacts);
+		}
+
+	}
 
 	public static void main(String[] args) {
+		
 		System.out.println("Welcome to Address Book Program in AddressBookMain class on Master Branch");
-
+		AddressBookMain addressBook = new AddressBookMain();
 		Map<String, AddressBookMain> addressBookMap = new HashMap<>();
 		System.out.println("How many address books should be created? ");
 		int noOfAddressBooks = sc.nextInt();
@@ -144,6 +155,7 @@ public class AddressBookMain {
 			System.out.println("Choose an option ");
 			System.out.println("1. Edit Contact ");
 			System.out.println("2. Delete Contact ");
+			System.out.println("3. AddMultipleContact  Contact ");
 			int option = sc.nextInt();
 			switch (option) {
 			case 1:
@@ -151,6 +163,9 @@ public class AddressBookMain {
 				break;
 			case 2:
                 deleteContactDetails(addressBookMap);
+                break;
+			case 3:
+                addingMultipleContacts(addressBookMap);
                 break;
 			default:
 				i = 0;
