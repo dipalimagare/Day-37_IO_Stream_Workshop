@@ -130,6 +130,18 @@ public class AddressBookMain {
 		}
 
 	}
+	private static void searchingContact() {
+		System.out.println("Searching a contact by name============");
+		for (Contact i : contactDetailsList) {
+			if (i.firstName.contentEquals("Dipali")) {
+
+				System.out.println("Name found :" + i.firstName);
+			} else {
+				System.out.println("No match");
+			}
+		}
+
+	}
 
 	public static void main(String[] args) {
 		
@@ -155,7 +167,8 @@ public class AddressBookMain {
 			System.out.println("Choose an option ");
 			System.out.println("1. Edit Contact ");
 			System.out.println("2. Delete Contact ");
-			System.out.println("3. AddMultipleContact  Contact ");
+			System.out.println("3. Searching Contact ");
+			System.out.println("4. AddMultipleContact  Contact ");
 			int option = sc.nextInt();
 			switch (option) {
 			case 1:
@@ -165,8 +178,12 @@ public class AddressBookMain {
                 deleteContactDetails(addressBookMap);
                 break;
 			case 3:
+                searchingContact();
+                break;
+			case 4:
                 addingMultipleContacts(addressBookMap);
                 break;
+			
 			default:
 				i = 0;
 			}
