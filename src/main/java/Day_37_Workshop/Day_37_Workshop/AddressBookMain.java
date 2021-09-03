@@ -120,17 +120,7 @@ public class AddressBookMain {
         }
 
     }
-	private static void addingMultipleContacts(Map<String, AddressBookMain> addressBookMap) {
-		System.out.println("Adding multiple contacts to addressbook");
-		Scanner s = new Scanner(System.in);
-		System.out.println("Enter how many contacts do u want to add?");
-		int numOfContacts = s.nextInt();
-		for (int i = 1; i <= numOfContacts; i++) {
-			AddressBookMain.addContact(numOfContacts);
-		}
-
-	}
-	private static void searchingContact() {
+	private static void searchingContact(Map<String, AddressBookMain> addressBookMap) {
 		System.out.println("Searching a contact by name============");
 		for (Contact i : contactDetailsList) {
 			if (i.firstName.contentEquals("Dipali")) {
@@ -142,6 +132,63 @@ public class AddressBookMain {
 		}
 
 	}
+	private static void addingMultipleContacts(Map<String, AddressBookMain> addressBookMap) {
+		System.out.println("Adding multiple contacts to addressbook");
+		Scanner s = new Scanner(System.in);
+		System.out.println("Enter how many contacts do u want to add?");
+		int numOfContacts = s.nextInt();
+		for (int i = 1; i <= numOfContacts; i++) {
+			AddressBookMain.addContact(numOfContacts);
+		}
+
+	}
+	
+	private static void displayContactDetails(Map<String, AddressBookMain> addressBookMap) {
+        for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+            AddressBookMain value = entry.getValue();
+            for (int i = 0; i < value.contactDetailsList.size(); i++)
+                System.out.println(value.contactDetailsList.get(i));
+        }
+    }
+
+    private static void searchByCity(Map<String, AddressBookMain> addressBookMap) {
+        sc.nextLine();
+        System.out.println("Enter City of person whose record is to be searched: ");
+        String city = sc.nextLine();
+        int flag = 0;
+        for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+            AddressBookMain value = entry.getValue();
+            for (int i = 0; i < value.contactDetailsList.size(); i++)
+                if (value.contactDetailsList.stream().anyMatch(n->n.getCity().equals(city))) {
+                    System.out.println(value.contactDetailsList.get(i));
+                    flag = 1;
+                    break;
+                }
+        }
+        if (flag == 0) {
+            System.out.println("No such record found");
+        }
+    }
+
+    private static void searchByState(Map<String, AddressBookMain> addressBookMap) {
+        sc.nextLine();
+        System.out.println("Enter state of person whose record is to be searched: ");
+        String state = sc.nextLine();
+        int flag = 0;
+        for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+            AddressBookMain value = entry.getValue();
+            for (int i = 0; i < value.contactDetailsList.size(); i++)
+                if (value.contactDetailsList.stream().anyMatch(n->n.getState().equals(state))) {
+                    System.out.println(value.contactDetailsList.get(i));
+                    flag = 1;
+                    break;
+                }
+        }
+        if (flag == 0) {
+            System.out.println("No such record found");
+        }
+    }
+
 
 	public static void main(String[] args) {
 		
@@ -169,6 +216,10 @@ public class AddressBookMain {
 			System.out.println("2. Delete Contact ");
 			System.out.println("3. Searching Contact ");
 			System.out.println("4. AddMultipleContact  Contact ");
+			System.out.println("5. Display Contact ");
+			System.out.println("6. searchByCity Contact ");
+			System.out.println("7. SearchByState Contact ");
+			System.out.println("8. Exit ");
 			int option = sc.nextInt();
 			switch (option) {
 			case 1:
@@ -178,12 +229,20 @@ public class AddressBookMain {
                 deleteContactDetails(addressBookMap);
                 break;
 			case 3:
-                searchingContact();
+                searchingContact(addressBookMap);
                 break;
 			case 4:
                 addingMultipleContacts(addressBookMap);
                 break;
-			
+			case 5:
+				 displayContactDetails(addressBookMap);
+				 break;
+			case 6:
+				 searchByCity(addressBookMap);
+				 break;
+			case 7:
+				 searchByState(addressBookMap);
+				 break;
 			default:
 				i = 0;
 			}
