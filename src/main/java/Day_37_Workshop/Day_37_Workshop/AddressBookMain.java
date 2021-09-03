@@ -1,20 +1,23 @@
 package Day_37_Workshop.Day_37_Workshop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class AddressBookMain {
 	static Scanner sc = new Scanner(System.in);
-	private LinkedList<Contact> contactDetailsList;
+	static LinkedList<Contact> contactDetailsList;
 
 	private AddressBookMain() {
 		contactDetailsList = new LinkedList<>();
 	}
 
 	private void addContact(int addressBookNum) {
-		System.out.print("Enter the number of entry in Address Book-" + addressBookNum +"::");
+		System.out.print("Enter the number of entry in Address Book-" + addressBookNum + "::");
 		int numOfEntries = sc.nextInt();
 		sc.nextLine();
 		for (int i = 0; i < numOfEntries; i++) {
@@ -57,23 +60,75 @@ public class AddressBookMain {
 		System.out.println("Contact added Successfully!!!!!");
 	}
 
+	private static void showContacts() {
+		System.out.println("Displaying the contacts of contactPersons");
+		List<Object> result = contactDetailsList.stream().collect(Collectors.toList());
+		System.out.println(result);
+	}
+
+	private static void editContact(Map<String, AddressBookMain> addressBookMap) {
+		sc.nextLine();
+		System.out.println("First Name of the person whose record is to be edited: ");
+		String firstName = sc.nextLine();
+		System.out.println("Last Name of the person whose record is to be edited: ");
+		String lastName = sc.nextLine();
+		System.out.println("New Address: ");
+		String address = sc.nextLine();
+		System.out.println("New City: ");
+		String city = sc.nextLine();
+		System.out.println("New State: ");
+		String state = sc.nextLine();
+		System.out.println("New ZIP: ");
+		int zip = sc.nextInt();
+		System.out.println("New Phone No: ");
+		long phoneNo = sc.nextLong();
+		sc.nextLine();
+		System.out.println("Edited Email ID: ");
+		String emailId = sc.nextLine();
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++)
+				if (value.contactDetailsList.get(i).firstName.equals(firstName)
+						&& value.contactDetailsList.get(i).lastName.equals(lastName)) {
+					Contact contactDetails = new Contact(city, state, emailId, address, lastName, zip, phoneNo,
+							firstName);
+					value.contactDetailsList.set(i, contactDetails);
+					System.out.println("Edited the contact");
+				}
+		}
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book Program in AddressBookMain class on Master Branch");
+
 		Map<String, AddressBookMain> addressBookMap = new HashMap<>();
-        System.out.println("How many address books should be created? ");
-        int noOfAddressBooks = sc.nextInt();
-        sc.nextLine();
-        AddressBookMain[] addressBookArray = new AddressBookMain[noOfAddressBooks];
-        for (int i = 0; i < noOfAddressBooks; i++) {
-            System.out.println("Enter name for Address Book " + (i + 1) + ": ");
-            String addressBookName = sc.nextLine();
-            addressBookArray[i] = new AddressBookMain();
-            addressBookArray[i].addContact(i + 1);
-//            addressBookMap.put(addressBookName, addressBookArray[i]);
-            
-          
-        }
-        
+		System.out.println("How many address books should be created? ");
+		int noOfAddressBooks = sc.nextInt();
+		sc.nextLine();
+
+		AddressBookMain[] addressBookArray = new AddressBookMain[noOfAddressBooks];
+		for (int i = 0; i < noOfAddressBooks; i++) {
+			System.out.println("Enter name for Address Book " + (i + 1) + ": ");
+			String addressBookName = sc.nextLine();
+			addressBookArray[i] = new AddressBookMain();
+			addressBookArray[i].addContact(i + 1);
+			addressBookMap.put(addressBookName, addressBookArray[i]);
+			
+			showContacts();
+		}
+		int i = 1;
+		while (i == 1) {
+			System.out.println("Choose an option ");
+			System.out.println("1. Edit Contact ");
+			int option = sc.nextInt();
+			switch (option) {
+			case 1:
+				editContact(addressBookMap);
+				break;
+			default:
+				i = 0;
+			}
+		}
 	}
 
 }
