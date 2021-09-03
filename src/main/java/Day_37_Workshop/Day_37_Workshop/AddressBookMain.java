@@ -97,6 +97,29 @@ public class AddressBookMain {
 				}
 		}
 	}
+	
+	public static void deleteContactDetails(Map<String, AddressBookMain> addressBookMap) {
+        sc.nextLine();
+        System.out.println("Enter First Name of person whose record is to be deleted: ");
+        String firstName = sc.nextLine();
+        System.out.println("Enter Last Name of person whose record is to be deleted: ");
+        String lastName = sc.nextLine();
+        int flag = 0;
+        for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+            AddressBookMain value = entry.getValue();
+            for (int i = 0; i < value.contactDetailsList.size(); i++)
+                if (value.contactDetailsList.get(i).firstName.equals(firstName)
+                        && value.contactDetailsList.get(i).lastName.equals(lastName)) {
+                    value.contactDetailsList.remove(i);
+                    System.out.println("Deleted Contact");
+                    flag = 1;
+                }
+        }
+        if (flag == 0) {
+            System.out.println("No such record found");
+        }
+
+    }
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book Program in AddressBookMain class on Master Branch");
@@ -120,11 +143,15 @@ public class AddressBookMain {
 		while (i == 1) {
 			System.out.println("Choose an option ");
 			System.out.println("1. Edit Contact ");
+			System.out.println("2. Delete Contact ");
 			int option = sc.nextInt();
 			switch (option) {
 			case 1:
 				editContact(addressBookMap);
 				break;
+			case 2:
+                deleteContactDetails(addressBookMap);
+                break;
 			default:
 				i = 0;
 			}
